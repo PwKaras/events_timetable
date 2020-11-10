@@ -1,13 +1,13 @@
 import React from 'react';
 
-export interface Event {
+export interface EventItem {
     id?: number | string;
     title: string;
-    time?: string;
-    description?: string;
-    duration?: number | string;
-    type?: string;
     image?: string;
+    time?: string;
+    duration?: number | string;
+    description?: string;
+    type?: string;
     phone?: number;
     email?: string;
     place?: string;
