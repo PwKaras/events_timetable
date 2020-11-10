@@ -14,7 +14,7 @@
     },
     {
       "id": "pl2",
-      "title": "Albuquerque International Balloon Fiesta",
+      "title": "Balloon Fiesta",
       "image": "https://picsum.photos/id/36/200/300",
       "time": "2021-10-09",
       "duration": "5 hours",
@@ -30,7 +30,7 @@
       "image": "https://picsum.photos/id/145/200/300",
       "time": "2020-12-05",
       "duration": "2.5 hours",
-      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit sapiente officia iure magni eaque. In assumenda recusandae laudantium, quibusdam hic perspiciatis enim qui nemo nobis nostrum modi eaque aut incidunt.",
+      "description": "Conference - Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit sapiente officia iure magni eaque. In assumenda recusandae laudantium, quibusdam hic perspiciatis enim qui nemo nobis nostrum modi eaque aut incidunt.",
       "type": "health",
       "phone": "0048612345678",
       "email": "test@test.eu",

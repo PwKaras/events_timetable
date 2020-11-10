@@ -3,10 +3,12 @@ import { Grid } from '@material-ui/core';
 import CardItem from '../components/CardItem';
 import Container from '@material-ui/core/Container';
 import Header from '../components/Header';
-import { EventItem } from './Event';
+import { EventItem } from './EventItem';
 
 const EventsListView = () => {
   const [eventsList, setEventsList] = useState<EventItem[]>([]);
+
+//   dummy data to develop app
   const DUMMY_EVENTS = [
     {
       id: 'pl1',
@@ -29,8 +31,11 @@ const EventsListView = () => {
   ];
 
   useEffect(() => {
-    return setEventsList(DUMMY_EVENTS);
+      fetch('http://localhost:9000/events')
+      .then(response => response.json()
+      .then(responseData => setEventsList(responseData)));
   }, []);
+
 
   return (
     <div>
