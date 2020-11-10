@@ -29,7 +29,7 @@ export default function CardItem(props: P) {
   const classes = useStyles();
 
   return (
-    <Link underline="none" component={RouterLink} to={`/event/:eventID`}>
+    <Link underline="none" component={RouterLink} to={`/events/${props.eventItem.id}`}>
       <Card
       className={classes.root}
       >

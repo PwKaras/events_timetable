@@ -1,13 +1,45 @@
-import React from 'react';
-import CardItem from '../components/CardItem';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { EventItem } from './EventItem';
+import Header from '../components/Header';
+import CartItemFull from '../components/CartItemFull';
+import Container from '@material-ui/core/Container';
+import LoadingSpinner from '../components/LoadingSpinner';
 
+interface ParamsType {
+  eventID: string;
+}
 const EventView = () => {
-    return (
-        <div>
-            <h1>event view will be here</h1>
-            {/* <CardItem/> */}
-        </div>
+  const ID = useParams<ParamsType>().eventID;
+  const [loading, setIsLoading] = useState(false);
+  const [eventItem, setEventItem] = useState<EventItem | null>(null);
+
+  //   fetching data triggered on change ID extracted from URL
+  useEffect(() => {
+      setIsLoading(true);
+    fetch(`http://localhost:9000/events/${ID}`).then((response) =>
+      response.json().then((responseData) => setEventItem(responseData))
     );
+    setIsLoading(false);
+  }, [ID]);
+
+  return (
+    <div>
+      <Header />
+      {loading && (
+        <Container>
+          <LoadingSpinner />
+        </Container>
+      )}
+      {!loading && eventItem && (
+        <Container maxWidth="sm">
+          <CartItemFull 
+          eventItem={eventItem}
+          />
+        </Container>
+      )}
+    </div>
+  );
 };
 
 export default EventView;

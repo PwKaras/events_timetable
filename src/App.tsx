@@ -12,7 +12,7 @@ function App() {
         <Route path="/events" exact>
           <EventsListView />
         </Route>
-        <Route path="/event/:eventID">
+        <Route path="/events/:eventID">
           <EventView />
         </Route>
         <Route path="/add">
