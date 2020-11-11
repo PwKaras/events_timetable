@@ -209,7 +209,10 @@ const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
               inputprops={{ name: 'type', id: 'type' }}
               // onBlur={handleBlur}
               value={
-                values.eventType || values.sport || values.health || values.culture
+                values.eventType ||
+                values.sport ||
+                values.health ||
+                values.culture
               }
               // value={typeEvent}
               // error={touched.type && Boolean(errors.type)}
@@ -220,7 +223,7 @@ const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
                 <MenuItem key={option.value} value={option.value}>
                   {option.label}
                 </MenuItem>))} */}
-                     {/* <FormControl>
+              {/* <FormControl>
               <InputLabel shrink={true} htmlFor="type">
                 Event type
               </InputLabel>
@@ -236,7 +239,7 @@ const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
                 <MenuItem value="health">Health</MenuItem>
               </Field>
             </FormControl> */}
-        {/* </Form> */}
+              {/* </Form> */}
               <Select>
                 <MenuItem value={values.sport}>Sport</MenuItem>
                 <MenuItem value={values.culture}>Culture</MenuItem>
@@ -312,10 +315,7 @@ const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
               helperText={touched.email && errors.email}
             />
           </Grid>
-
         </Grid>
-   
-
         <Button
           type="submit"
           fullWidth
@@ -329,6 +329,16 @@ const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
           }
         >
           Add event
+        </Button>
+
+        {/* clear form on user demands*/}
+        <Button type="button" 
+        onClick={() => props.resetForm()}
+        fullWidth
+          variant="contained"
+          color="primary"
+          >
+          Clear form
         </Button>
       </Form>
     </Container>
@@ -352,18 +362,45 @@ export const AddEventForm = withFormik<MyFormProps, EventItem>({
     title: Yup.string()
       .min(3, 'Title must contain at least 3 characters')
       .required('Title is required'),
-      image: Yup.string()
-      .min(5, 'URL image must contain at 5 characters'),
+    image: Yup.string().min(5, 'URL image must contain at 5 characters'),
     date: Yup.string(),
     time: Yup.string(),
-    description: Yup.string().min(5,"Description must contain at least 5 characters, and not more than 500").max(500,"Description must contain at least 5 characters, and not more than 500" ),
-    phone: Yup.string().min(8, "Phone number must contain at least 9 numbers"),
-    email: Yup.string().email("Valid email must contain @ and dot"),
-    place: Yup.string().min(2,"Event place must contain at least 2 characters, and not more than 150").max(150,"Description must contain at least 2 characters, and not more than 150" )   
+    description: Yup.string()
+      .min(
+        5,
+        'Description must contain at least 5 characters, and not more than 500'
+      )
+      .max(
+        500,
+        'Description must contain at least 5 characters, and not more than 500'
+      ),
+    phone: Yup.string().min(8, 'Phone number must contain at least 9 numbers'),
+    email: Yup.string().email('Valid email must contain @ and dot'),
+    place: Yup.string()
+      .min(
+        2,
+        'Event place must contain at least 2 characters, and not more than 150'
+      )
+      .max(
+        150,
+        'Description must contain at least 2 characters, and not more than 150'
+      ),
   }),
 
   handleSubmit(
-    { title, image, date, time, eventType, sport, culture, health, phone, email, place }: EventItem,
+    {
+      title,
+      image,
+      date,
+      time,
+      eventType,
+      sport,
+      culture,
+      health,
+      phone,
+      email,
+      place,
+    }: EventItem,
     { props, setSubmitting, setErrors }
   ) {
     const newEventItem = {
@@ -374,8 +411,7 @@ export const AddEventForm = withFormik<MyFormProps, EventItem>({
       eventType,
       phone,
       email,
-      place
-
+      place,
     };
     // console.log(title, date);
     console.log(newEventItem);
