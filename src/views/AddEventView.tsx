@@ -1,13 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from '../components/Header';
+import { AddEventForm } from '../components/AddEventForm';
+import { Container } from '@material-ui/core';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const AddEventView = () => {
+
+    const [loading, setIsLoading] = useState(false);
+
     return (
-        <div>
-            <Header />
-            <h1>add event form will be here</h1>
-        </div>
-    );
+    <React.Fragment>
+      <Header />
+      {loading && (
+        <Container>
+          <LoadingSpinner />
+        </Container>
+      )}
+      <Container>
+      <AddEventForm />
+      </Container>
+    </React.Fragment>
+  );
 };
 
 export default AddEventView;

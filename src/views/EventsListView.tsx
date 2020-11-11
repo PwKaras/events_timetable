@@ -16,19 +16,19 @@ const EventsListView = () => {
       id: 'pl1',
       title: 'Mountain hiking',
       image: 'https://picsum.photos/seed/picsum/200/300',
-      time: '2020-11-15',
+      date: '2020-11-15',
     },
     {
       id: 'pl2',
       title: 'Balloon Fiesta',
       image: 'https://picsum.photos/id/36/200/300',
-      time: '2021-10-09',
+      date: '2021-10-09',
     },
     {
       id: 'pl3',
       title: 'Public Health',
       image: 'https://picsum.photos/id/145/200/300',
-      time: '2020-12-05',
+      date: '2020-12-05',
     },
   ];
 

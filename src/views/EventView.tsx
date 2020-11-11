@@ -24,7 +24,7 @@ const EventView = () => {
   }, [ID]);
 
   return (
-    <div>
+    <React.Fragment>
       <Header />
       {loading && (
         <Container>
@@ -38,7 +38,7 @@ const EventView = () => {
           />
         </Container>
       )}
-    </div>
+    </React.Fragment>
   );
 };
 
