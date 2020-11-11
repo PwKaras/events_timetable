@@ -41,16 +41,15 @@ export default function CartItemFull(props: P) {
       <CardMedia
         className={classes.media}
         image={props.eventItem.image}
-        // title="Paella dish"
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           {props.eventItem.description}
         </Typography>
-        <Typography paragraph>When: {props.eventItem.time}</Typography>
-        <Typography paragraph>Duration: {props.eventItem.duration}</Typography>
+        <Typography paragraph>Date: {props.eventItem.date}</Typography>
+        <Typography paragraph>Time: {props.eventItem.time}</Typography>
         <Typography paragraph>Where: {props.eventItem.place}</Typography>
-        <Typography paragraph>Focus to: {props.eventItem.type}</Typography>
+        <Typography paragraph>Focus to: {props.eventItem.eventType}</Typography>
         <Typography paragraph>
           <PhoneIcon color="primary"/> {props.eventItem.phone}
         </Typography>

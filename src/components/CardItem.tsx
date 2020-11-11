@@ -44,7 +44,7 @@ export default function CardItem(props: P) {
               {props.eventItem.title}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              {props.eventItem.time}
+              {props.eventItem.date}
             </Typography>
           </CardContent>
         </CardActionArea>
