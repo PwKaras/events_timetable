@@ -18,6 +18,7 @@ function App() {
         <Route path="/add">
           <AddEventView />
         </Route>
+  {/* in case of incorect URL - redirect to main view /events */}
         <Redirect to="/events" />
       </Switch>
     </BrowserRouter>

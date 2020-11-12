@@ -1,37 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, makeStyles, Theme} from '@material-ui/core';
 import CardItem from '../components/CardItem';
 import Container from '@material-ui/core/Container';
 import Header from '../components/Header';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { EventItem } from './EventItem';
+import { Title } from '../components/Title';
 
 const EventsListView = () => {
+  // loading state
   const [loading, setIsLoading] = useState(false);
+  
+  // prepare to holding data fetching from GET /events 
   const [eventsList, setEventsList] = useState<EventItem[]>([]);
 
-  //   dummy data to develop app
-  const DUMMY_EVENTS = [
-    {
-      id: 'pl1',
-      title: 'Mountain hiking',
-      image: 'https://picsum.photos/seed/picsum/200/300',
-      date: '2020-11-15',
+  const useStyles = makeStyles((theme: Theme) => ({
+    cardGrid: {
+      paddingTop: theme.spacing(8),
+      paddingBottom: theme.spacing(8),
     },
-    {
-      id: 'pl2',
-      title: 'Balloon Fiesta',
-      image: 'https://picsum.photos/id/36/200/300',
-      date: '2021-10-09',
+    cardContent: {
+      flexGrow: 1,
     },
-    {
-      id: 'pl3',
-      title: 'Public Health',
-      image: 'https://picsum.photos/id/145/200/300',
-      date: '2020-12-05',
-    },
-  ];
+  }));
+  const classes = useStyles();
 
+  // fentching date - endpoint GET /events
   useEffect(() => {
     const sendRequest = async () => {
       setIsLoading(true);
@@ -39,7 +33,7 @@ const EventsListView = () => {
         const response = await fetch('http://localhost:9000/events');
         const responseData = await response.json();
         if (!response.ok) {
-          console.log('Something went wrong');
+          console.log('Something went wrong, try again later');
         }
         setEventsList(responseData);
       } catch (error) {
@@ -49,46 +43,31 @@ const EventsListView = () => {
     };
     sendRequest();
   }, []);
-  //   useEffect(() => {
-  //     fetch('http://localhost:9000/events').then((response) =>
-  //       response.json().then((responseData) => setEventsList(responseData))
-  //     );
-  //   }, []);
+
   return (
-    // <div>
-    //   <Header />
-    //   <Container maxWidth="lg">
-    //     <h1>Events List view will be here</h1>
-    //     <Grid container justify="space-around" spacing={2}>
-    //       {eventsList.map((eventItem) => (
-    //         <Grid container justify="center" item xs={4} sm={5}>
-    //           <CardItem eventItem={eventItem} key={eventItem.id} />
-    //         </Grid>
-    //       ))}
-    //     </Grid>
-    //   </Container>
-    // </div>
     <React.Fragment>
       <Header />
       {loading && (
-        <Container>
-          <LoadingSpinner />
-        </Container>
+         <Container>
+         <LoadingSpinner />
+       </Container>
       )}
+
+      {/* when loading is finished -  display list of fetching */}
       {!loading && (
         <Container maxWidth="lg">
-          <Container>
-            <h1>Events List</h1>
+          <Title>Events List</Title>
+          <Container className={classes.cardGrid} maxWidth="md">
+            <Grid container spacing={4}>
+              {eventsList.map((eventItem) => (
+                <Grid item key={eventItem.id} xs={12} sm={6} md={4}>
+                  <CardItem eventItem={eventItem} />
+                </Grid>
+              ))}
+            </Grid>
           </Container>
-          <Grid container justify="space-around" spacing={2}>
-            {eventsList.map((eventItem) => (
-              <Grid container justify="center" item xs={4} sm={5}>
-                <CardItem key={eventItem.id} eventItem={eventItem} />
-              </Grid>
-            ))}
-          </Grid>
         </Container>
-      )}
+      )};
     </React.Fragment>
   );
 };

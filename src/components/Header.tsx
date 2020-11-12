@@ -27,9 +27,12 @@ export default function Header() {
       <AppBar position="static">
         <Toolbar>
           <ToogleMenu />
+          {/* app title */}
           <Typography variant="h6" className={classes.title}>
             Events timetable
           </Typography>
+          
+          {/*redirect to add events view  */}
           <Button
             component={Link}
             to="/add"

@@ -16,11 +16,21 @@ const EventView = () => {
 
   //   fetching data triggered on change ID extracted from URL
   useEffect(() => {
+    const sendRequest = async () => {
       setIsLoading(true);
-    fetch(`http://localhost:9000/events/${ID}`).then((response) =>
-      response.json().then((responseData) => setEventItem(responseData))
-    );
-    setIsLoading(false);
+      try {
+        const response = await fetch(`http://localhost:9000/events/${ID}`);
+        const responseData = await response.json();
+        if (!response.ok) {
+          console.log('Something went wrong, try again later');
+        }
+        setEventItem(responseData);
+      } catch (error) {
+        console.log(error);
+      }
+      setIsLoading(false);
+    };
+    sendRequest();
   }, [ID]);
 
   return (
@@ -33,9 +43,7 @@ const EventView = () => {
       )}
       {!loading && eventItem && (
         <Container maxWidth="sm">
-          <CartItemFull 
-          eventItem={eventItem}
-          />
+          <CartItemFull eventItem={eventItem} />
         </Container>
       )}
     </React.Fragment>
