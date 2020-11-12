@@ -8,6 +8,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import PhoneIcon from '@material-ui/icons/Phone';
 import EmailIcon from '@material-ui/icons/Email';
+import { Title } from './Title';
 
 type P = {
   eventItem: EventItem;
@@ -33,9 +34,12 @@ export default function CartItemFull(props: P) {
     <Card className={classes.root}>
       <CardHeader
         title={
-          <Typography gutterBottom variant="h4" component="h2">
+          <Title>
             {props.eventItem.title}
-          </Typography>
+
+          </Title>
+          // <Typography component="h1" variant="h5" align="center">
+          // </Typography>
         }
       />
       <CardMedia

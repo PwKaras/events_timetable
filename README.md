@@ -1,3 +1,10 @@
+React, Material UI, TypeScript, Formik-  
+app to show information about interesting events
+
+start:
+frontend: npm start
+fake backend server: npm run api
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -7,7 +7,7 @@
       "date": "2020-11-15",
       "time": "09:00:00",
       "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit sapiente officia iure magni eaque. In assumenda recusandae laudantium, quibusdam hic perspiciatis enim qui nemo nobis nostrum modi eaque aut incidunt.",
-      "type": "sport",
+      "eventType": "sport",
       "phone": "0048600000000",
       "email": "john@john.com",
       "place": "Blue Mountain"
@@ -19,7 +19,7 @@
       "date": "2021-10-09",
       "time": "05:00:00",
       "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit sapiente officia iure magni eaque. In assumenda recusandae laudantium, quibusdam hic perspiciatis enim qui nemo nobis nostrum modi eaque aut incidunt.",
-      "type": "culture",
+      "eventType": "culture",
       "phone": "0048693000000",
       "email": "admin@admin.com",
       "place": "Albuquerque"
@@ -31,7 +31,7 @@
       "date": "2020-12-05",
       "time": "11:30:00",
       "description": "Conference - Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit sapiente officia iure magni eaque. In assumenda recusandae laudantium, quibusdam hic perspiciatis enim qui nemo nobis nostrum modi eaque aut incidunt.",
-      "type": "health",
+      "eventType": "health",
       "phone": "0048612345678",
       "email": "test@test.eu",
       "place": "Brussels"

@@ -20,6 +20,7 @@ import {
 } from '@material-ui/core';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import { Title } from './Title';
 
 interface FormValues {
   title: string;
@@ -122,8 +123,10 @@ const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
 
     <Container component="main" maxWidth="xs" className={classes.container}>
       <CssBaseline />
-      <Typography component="h1" variant="h5">
+      <Title>
         Add event form
+      </Title>
+      <Typography component="h1" variant="h5">
       </Typography>
       <Form onSubmit={handleSubmit} className={classes.form}>
         {/* <Form> */}
@@ -361,7 +364,7 @@ export const AddEventForm = withFormik<MyFormProps, EventItem>({
     place: props.initialPlace || '',
   }),
 
-  // validation
+  // validation with Yup
   validationSchema: Yup.object().shape({
     title: Yup.string()
       .min(3, 'Title must contain at least 3 characters')
