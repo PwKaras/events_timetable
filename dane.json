@@ -5,7 +5,7 @@
       "title": "Mountain hiking",
       "image": "https://picsum.photos/id/997/200/300",
       "date": "2020-11-15",
-      "time": "2 hours",
+      "time": "09:00:00",
       "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit sapiente officia iure magni eaque. In assumenda recusandae laudantium, quibusdam hic perspiciatis enim qui nemo nobis nostrum modi eaque aut incidunt.",
       "type": "sport",
       "phone": "0048600000000",
@@ -17,7 +17,7 @@
       "title": "Balloon Fiesta",
       "image": "https://picsum.photos/id/791/200/300",
       "date": "2021-10-09",
-      "time": "5 hours",
+      "time": "05:00:00",
       "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit sapiente officia iure magni eaque. In assumenda recusandae laudantium, quibusdam hic perspiciatis enim qui nemo nobis nostrum modi eaque aut incidunt.",
       "type": "culture",
       "phone": "0048693000000",
@@ -29,7 +29,7 @@
       "title": "Public Health",
       "image": "https://picsum.photos/id/326/200/300",
       "date": "2020-12-05",
-      "time": "2.5 hours",
+      "time": "11:30:00",
       "description": "Conference - Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit sapiente officia iure magni eaque. In assumenda recusandae laudantium, quibusdam hic perspiciatis enim qui nemo nobis nostrum modi eaque aut incidunt.",
       "type": "health",
       "phone": "0048612345678",
@@ -37,5 +37,17 @@
       "place": "Brussels"
     }
   ],
-  "add": []
+  "add": [
+    {
+      "title": "Sunset",
+      "image": "https://picsum.photos/id/997/200/300",
+      "date": "2020-12-01",
+      "time": "18:40",
+      "eventType": "",
+      "phone": "",
+      "email": "admin@gmail.com",
+      "place": "Ellery Creek Big Hole",
+      "id": 1
+    }
+  ]
 }

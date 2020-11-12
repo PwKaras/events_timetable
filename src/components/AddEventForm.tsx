@@ -29,7 +29,7 @@ interface OtherProps {
   title?: string;
   image?: string;
   date?: string;
-  time?: number | string;
+  time?: string;
   description?: string;
   eventType?: string;
   phone?: number;
@@ -41,10 +41,10 @@ interface MyFormProps {
   initialTitle?: string;
   initialImage?: string;
   initialDate?: string;
-  initialTime?: number | string;
+  initialTime?: string;
   initialDescription?: string;
   initialEventType?: string;
-  initialPhone?: number;
+  initialPhone?: string;
   initialEmail?: string;
   initialPlace?: string;
 }
@@ -151,6 +151,7 @@ const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
               name="date"
               id="date"
               label="Event`s Date"
+              InputLabelProps={{ shrink: true }}
               variant="outlined"
               type="date"
               placeholder="Please choose event date"
@@ -170,6 +171,7 @@ const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
               id="time"
               type="Time"
               label="time"
+              InputLabelProps={{ shrink: true }}
               placeholder="Please choose event start hours"
               helpertext="Please choose event start hours"
               onChange={handleChange}
@@ -209,7 +211,10 @@ const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
               inputprops={{ name: 'type', id: 'type' }}
               // onBlur={handleBlur}
               value={
-                values.eventType || values.sport || values.health || values.culture
+                values.eventType ||
+                values.sport ||
+                values.health ||
+                values.culture
               }
               // value={typeEvent}
               // error={touched.type && Boolean(errors.type)}
@@ -220,7 +225,7 @@ const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
                 <MenuItem key={option.value} value={option.value}>
                   {option.label}
                 </MenuItem>))} */}
-                     {/* <FormControl>
+              {/* <FormControl>
               <InputLabel shrink={true} htmlFor="type">
                 Event type
               </InputLabel>
@@ -236,7 +241,7 @@ const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
                 <MenuItem value="health">Health</MenuItem>
               </Field>
             </FormControl> */}
-        {/* </Form> */}
+              {/* </Form> */}
               <Select>
                 <MenuItem value={values.sport}>Sport</MenuItem>
                 <MenuItem value={values.culture}>Culture</MenuItem>
@@ -312,10 +317,7 @@ const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
               helperText={touched.email && errors.email}
             />
           </Grid>
-
         </Grid>
-   
-
         <Button
           type="submit"
           fullWidth
@@ -328,7 +330,18 @@ const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
             !!(errors.description && touched.date)
           }
         >
-          Add event
+          Save event
+        </Button>
+
+        {/* clear form on user demands*/}
+        <Button
+          type="button"
+          onClick={() => props.resetForm()}
+          fullWidth
+          variant="contained"
+          color="primary"
+        >
+          Clear form
         </Button>
       </Form>
     </Container>
@@ -339,47 +352,86 @@ export const AddEventForm = withFormik<MyFormProps, EventItem>({
   mapPropsToValues: (props) => ({
     title: props.initialTitle || '',
     image: props.initialImage || '',
-    date: props.initialDate || '2020-12-24',
-    time: props.initialTime || '09:00:00',
+    date: props.initialDate || '',
+    time: props.initialTime || '',
     eventType: props.initialEventType || '',
     description: props.initialDescription || '',
-    phone: props.initialPhone,
+    phone: props.initialPhone || '',
     email: props.initialEmail || '',
     place: props.initialPlace || '',
   }),
+
   // validation
   validationSchema: Yup.object().shape({
     title: Yup.string()
       .min(3, 'Title must contain at least 3 characters')
       .required('Title is required'),
-      image: Yup.string()
-      .min(5, 'URL image must contain at 5 characters'),
-    date: Yup.string(),
-    time: Yup.string(),
-    description: Yup.string().min(5,"Description must contain at least 5 characters, and not more than 500").max(500,"Description must contain at least 5 characters, and not more than 500" ),
-    phone: Yup.string().min(8, "Phone number must contain at least 9 numbers"),
-    email: Yup.string().email("Valid email must contain @ and dot"),
-    place: Yup.string().min(2,"Event place must contain at least 2 characters, and not more than 150").max(150,"Description must contain at least 2 characters, and not more than 150" )   
+    image: Yup.string().min(5, 'URL image must contain at 5 characters'),
+    date: Yup.string().required('Event Date is required'),
+    time: Yup.string().required('Event start time is required'),
+    description: Yup.string()
+      .min(
+        5,
+        'Description must contain at least 5 characters, and not more than 500'
+      )
+      .max(
+        500,
+        'Description must contain at least 5 characters, and not more than 500'
+      ),
+    phone: Yup.string().min(8, 'Phone number must contain at least 9 numbers'),
+    email: Yup.string().email('Valid email must contain @ and dot'),
+    place: Yup.string()
+      .min(
+        2,
+        'Event place must contain at least 2 characters, and not more than 150'
+      )
+      .max(
+        150,
+        'Description must contain at least 2 characters, and not more than 150'
+      ),
   }),
 
   handleSubmit(
-    { title, image, date, time, eventType, sport, culture, health, phone, email, place }: EventItem,
-    { props, setSubmitting, setErrors }
-  ) {
-    const newEventItem = {
+    {
       title,
       image,
       date,
       time,
       eventType,
+      sport,
+      culture,
+      health,
       phone,
       email,
-      place
+      place,
+    }: EventItem,
+    { props, setSubmitting, setErrors }
+  ) {
 
-    };
-    // console.log(title, date);
-    console.log(newEventItem);
-    alert(JSON.stringify(newEventItem, null, 2));
-    //    actions.setSubmitting(false);
+    // POST inputs data to end point /add
+    fetch('http://localhost:9000/add', {
+      method: 'POST',
+      body: JSON.stringify({
+        title,
+        image,
+        date,
+        time,
+        eventType,
+        sport,
+        culture,
+        health,
+        phone,
+        email,
+        place,
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => console.log(json));
+
+    
+    alert('Events has been added. Create new events or check our events list');
   },
 })(InnerForm);
