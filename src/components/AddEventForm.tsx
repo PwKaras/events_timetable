@@ -29,7 +29,7 @@ interface OtherProps {
   title?: string;
   image?: string;
   date?: string;
-  time?: number | string;
+  time?: string;
   description?: string;
   eventType?: string;
   phone?: number;
@@ -41,10 +41,10 @@ interface MyFormProps {
   initialTitle?: string;
   initialImage?: string;
   initialDate?: string;
-  initialTime?: number | string;
+  initialTime?: string;
   initialDescription?: string;
   initialEventType?: string;
-  initialPhone?: number;
+  initialPhone?: string;
   initialEmail?: string;
   initialPlace?: string;
 }
@@ -151,6 +151,7 @@ const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
               name="date"
               id="date"
               label="Event`s Date"
+              InputLabelProps={{ shrink: true }}
               variant="outlined"
               type="date"
               placeholder="Please choose event date"
@@ -170,6 +171,7 @@ const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
               id="time"
               type="Time"
               label="time"
+              InputLabelProps={{ shrink: true }}
               placeholder="Please choose event start hours"
               helpertext="Please choose event start hours"
               onChange={handleChange}
@@ -328,16 +330,17 @@ const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
             !!(errors.description && touched.date)
           }
         >
-          Add event
+          Save event
         </Button>
 
         {/* clear form on user demands*/}
-        <Button type="button" 
-        onClick={() => props.resetForm()}
-        fullWidth
+        <Button
+          type="button"
+          onClick={() => props.resetForm()}
+          fullWidth
           variant="contained"
           color="primary"
-          >
+        >
           Clear form
         </Button>
       </Form>
@@ -349,22 +352,23 @@ export const AddEventForm = withFormik<MyFormProps, EventItem>({
   mapPropsToValues: (props) => ({
     title: props.initialTitle || '',
     image: props.initialImage || '',
-    date: props.initialDate || '2020-12-24',
-    time: props.initialTime || '09:00:00',
+    date: props.initialDate || '',
+    time: props.initialTime || '',
     eventType: props.initialEventType || '',
     description: props.initialDescription || '',
-    phone: props.initialPhone,
+    phone: props.initialPhone || '',
     email: props.initialEmail || '',
     place: props.initialPlace || '',
   }),
+
   // validation
   validationSchema: Yup.object().shape({
     title: Yup.string()
       .min(3, 'Title must contain at least 3 characters')
       .required('Title is required'),
     image: Yup.string().min(5, 'URL image must contain at 5 characters'),
-    date: Yup.string(),
-    time: Yup.string(),
+    date: Yup.string().required('Event Date is required'),
+    time: Yup.string().required('Event start time is required'),
     description: Yup.string()
       .min(
         5,
@@ -403,19 +407,31 @@ export const AddEventForm = withFormik<MyFormProps, EventItem>({
     }: EventItem,
     { props, setSubmitting, setErrors }
   ) {
-    const newEventItem = {
-      title,
-      image,
-      date,
-      time,
-      eventType,
-      phone,
-      email,
-      place,
-    };
-    // console.log(title, date);
-    console.log(newEventItem);
-    alert(JSON.stringify(newEventItem, null, 2));
-    //    actions.setSubmitting(false);
+
+    // POST inputs data to end point /add
+    fetch('http://localhost:9000/add', {
+      method: 'POST',
+      body: JSON.stringify({
+        title,
+        image,
+        date,
+        time,
+        eventType,
+        sport,
+        culture,
+        health,
+        phone,
+        email,
+        place,
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => console.log(json));
+
+    
+    alert('Events has been added. Create new events or check our events list');
   },
 })(InnerForm);
