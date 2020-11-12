@@ -32,7 +32,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "api": "json-server --port 9000 ./dane.json"
+    "api": "json-server --port 9000 ./dane.json",
+    "cypress:open": "cypress open"
   },
   "eslintConfig": {
     "extends": [
@@ -54,6 +55,7 @@
   },
   "devDependencies": {
     "@types/react": "^16.9.56",
-    "@types/react-router-dom": "^5.1.6"
+    "@types/react-router-dom": "^5.1.6",
+    "cypress": "^5.6.0"
   }
 }

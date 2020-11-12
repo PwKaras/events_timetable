@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { withFormik, FormikProps, FormikErrors, Form, Field } from 'formik';
+import React from 'react';
+import { Title } from './Title';
+import { withFormik, FormikProps, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { EventItem } from '../views/EventItem';
 import 'date-fns';
-
 import {
   Typography,
   Container,
@@ -13,18 +13,11 @@ import {
   Grid,
   TextField,
   FormControl,
-  InputLabel,
   MenuItem,
   Select,
   Button,
 } from '@material-ui/core';
-
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import { Title } from './Title';
-
-interface FormValues {
-  title: string;
-}
 
 interface OtherProps {
   title?: string;
@@ -33,6 +26,9 @@ interface OtherProps {
   time?: string;
   description?: string;
   eventType?: string;
+  sport?: string;
+  culture?: string;
+  health?: string;
   phone?: number;
   email?: string;
   place?: string;
@@ -45,10 +41,14 @@ interface MyFormProps {
   initialTime?: string;
   initialDescription?: string;
   initialEventType?: string;
+  initialSport?: string;
+  initialCulture?: string;
+  initialHealth?: string;
   initialPhone?: string;
   initialEmail?: string;
   initialPlace?: string;
 }
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
@@ -64,6 +64,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+// listening change on input fields
 const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
   const {
     values,
@@ -73,54 +74,12 @@ const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
     handleBlur,
     handleSubmit,
     isSubmitting,
-    // title,
-    // image,
-    // date,
-    // time,
-    // description,
-    // type,
-    // phone,
-    // email,
-    // place,
   } = props;
 
-  // const [typeEvent, setTypeEvent] = useState<string | null>('');
-  // const handleChangeType = (
-  //   event: React.ChangeEvent<{ value: 'sport' | 'culture' | 'helth' }>
-  // ) => {
-  //   setTypeEvent(event.target.value);
-  // };
   const classes = useStyles();
-  return (
-    // <div>
-    //   <form onSubmit={formik.handleSubmit}>
-    //     <TextField
-    //       fullWidth
-    //       id="email"
-    //       name="email"
-    //       label="Email"
-    //       value={formik.values.email}
-    //       onChange={formik.handleChange}
-    //       error={formik.touched.email && Boolean(formik.errors.email)}
-    //       helperText={formik.touched.email && formik.errors.email}
-    //     />
-    //     <TextField
-    //       fullWidth
-    //       id="password"
-    //       name="password"
-    //       label="Password"
-    //       type="password"
-    //       value={formik.values.password}
-    //       onChange={formik.handleChange}
-    //       error={formik.touched.password && Boolean(formik.errors.password)}
-    //       helperText={formik.touched.password && formik.errors.password}
-    //     />
-    //     <Button color="primary" variant="contained" fullWidth type="submit">
-    //       Submit
-    //     </Button>
-    //   </form>
-    // </div>
 
+  return (
+    // form 
     <Container component="main" maxWidth="xs" className={classes.container}>
       <CssBaseline />
       <Title>
@@ -129,7 +88,6 @@ const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
       <Typography component="h1" variant="h5">
       </Typography>
       <Form onSubmit={handleSubmit} className={classes.form}>
-        {/* <Form> */}
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Field
@@ -180,6 +138,8 @@ const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.time}
+              error={touched.time && Boolean(errors.time)}
+              helperText={touched.time && errors.time}
             />
           </Grid>
           <Grid item xs={12}>
@@ -205,13 +165,12 @@ const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
               variant="outlined"
               fullWidth
               type="text"
-              name="type"
-              id="type"
-              label="Select event type"
+              name="eventType"
+              id="eventType"
+              label="Select event eventType"
               select="true"
               onChange={handleChange}
-              // onChange={handleChangeType}
-              inputprops={{ name: 'type', id: 'type' }}
+              // inputprops={{ name: 'eventType', id: 'eventType' }}
               // onBlur={handleBlur}
               value={
                 values.eventType ||
@@ -219,36 +178,12 @@ const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
                 values.health ||
                 values.culture
               }
-              // value={typeEvent}
-              // error={touched.type && Boolean(errors.type)}
-              // helperText={touched.type && errors.type}
-              // multiple={true}
             >
-              {/* {ranges.map((option: any) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>))} */}
-              {/* <FormControl>
-              <InputLabel shrink={true} htmlFor="type">
-                Event type
-              </InputLabel>
-              <Field
-                component={onselect}
-                type="text"
-                name="type"
-                multiple={true}
-                inputprops={{name: 'type', id: 'type'}}
-              >
-                <MenuItem value="sport">Sport</MenuItem>
-                <MenuItem value="culture">culture</MenuItem>
-                <MenuItem value="health">Health</MenuItem>
-              </Field>
-            </FormControl> */}
-              {/* </Form> */}
               <Select>
-                <MenuItem value={values.sport}>Sport</MenuItem>
-                <MenuItem value={values.culture}>Culture</MenuItem>
-                <MenuItem value={values.health}>Health</MenuItem>
+                <MenuItem value={values.sport} id="sport" onChange={handleChange} onBlur={handleBlur} 
+                >Sport</MenuItem>
+                <MenuItem value={values.culture} id="culture" onChange={handleChange} onBlur={handleBlur}>Culture</MenuItem>
+                <MenuItem value={values.health} id="health"onChange={handleChange} onBlur={handleBlur}>Health</MenuItem>
               </Select>
             </Field>
           </Grid>
@@ -312,7 +247,6 @@ const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
               type="email"
               label="email"
               placeholder="Please enter contact email to event organizator"
-              helpertext="Please choose event start hours"
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.email}
@@ -321,6 +255,8 @@ const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
             />
           </Grid>
         </Grid>
+
+        {/* submit button disabled when required inputs are missing*/}
         <Button
           type="submit"
           fullWidth
@@ -330,7 +266,7 @@ const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
           disabled={
             isSubmitting ||
             !!(errors.title && touched.title) ||
-            !!(errors.description && touched.date)
+            !!(errors.date && touched.date) || !!(errors.time && touched.time)
           }
         >
           Save event
@@ -411,7 +347,7 @@ export const AddEventForm = withFormik<MyFormProps, EventItem>({
     { props, setSubmitting, setErrors }
   ) {
 
-    // POST inputs data to end point /add
+    // POST inputs data to endpoint /add
     fetch('http://localhost:9000/add', {
       method: 'POST',
       body: JSON.stringify({
@@ -434,7 +370,7 @@ export const AddEventForm = withFormik<MyFormProps, EventItem>({
       .then((response) => response.json())
       .then((json) => console.log(json));
 
-    
+    // feedback for user
     alert('Events has been added. Create new events or check our events list');
   },
 })(InnerForm);
