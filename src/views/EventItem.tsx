@@ -6,9 +6,6 @@ export interface EventItem {
   time: string;
   description?: string;
   eventType?: string;
-  sport?: string;
-  culture?: string;
-  health?: string;
   phone?: string;
   email: string;
   place?: string;
