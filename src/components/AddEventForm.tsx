@@ -16,6 +16,7 @@ import {
   MenuItem,
   Select,
   Button,
+  InputLabel,
 } from '@material-ui/core';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
@@ -26,9 +27,6 @@ interface OtherProps {
   time?: string;
   description?: string;
   eventType?: string;
-  sport?: string;
-  culture?: string;
-  health?: string;
   phone?: number;
   email?: string;
   place?: string;
@@ -41,9 +39,6 @@ interface MyFormProps {
   initialTime?: string;
   initialDescription?: string;
   initialEventType?: string;
-  initialSport?: string;
-  initialCulture?: string;
-  initialHealth?: string;
   initialPhone?: string;
   initialEmail?: string;
   initialPlace?: string;
@@ -60,6 +55,12 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
+    },
+    formControl: {
+      minWidth: 100,
+    },
+    inputlabel: {
+      padding: theme.spacing(0, 0, 0, 2),
     },
   })
 );
@@ -79,14 +80,11 @@ const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
   const classes = useStyles();
 
   return (
-    // form 
+    // form
     <Container component="main" maxWidth="xs" className={classes.container}>
       <CssBaseline />
-      <Title>
-        Add event form
-      </Title>
-      <Typography component="h1" variant="h5">
-      </Typography>
+      <Title>Add event form</Title>
+      <Typography component="h1" variant="h5"></Typography>
       <Form onSubmit={handleSubmit} className={classes.form}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -160,30 +158,27 @@ const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
             />
           </Grid>
           <Grid item xs={12}>
-            <Field
-              component={FormControl}
-              variant="outlined"
-              fullWidth
-              type="text"
-              name="eventType"
-              id="eventType"
-              label="Select event eventType"
-              select="true"
-              onChange={handleChange}
-              // inputprops={{ name: 'eventType', id: 'eventType' }}
-              // onBlur={handleBlur}
-              value={
-                values.eventType ||
-                values.sport ||
-                values.health ||
-                values.culture
-              }
-            >
-              <Select>
-                <MenuItem value={values.sport} id="sport" onChange={handleChange} onBlur={handleBlur} 
-                >Sport</MenuItem>
-                <MenuItem value={values.culture} id="culture" onChange={handleChange} onBlur={handleBlur}>Culture</MenuItem>
-                <MenuItem value={values.health} id="health"onChange={handleChange} onBlur={handleBlur}>Health</MenuItem>
+            <Field component={FormControl} fullWidth id="eventType">
+              <Field
+                component={InputLabel}
+                id="eventType"
+                className={classes.inputlabel}
+              >
+                Event Type
+              </Field>
+              <Select
+                labelId="eventType"
+                label="Event Type"
+                id="eventType"
+                name="eventType"
+                variant="outlined"
+                autoWidth
+                value={values.eventType}
+                onChange={handleChange}
+              >
+                <MenuItem value="sport">Sport</MenuItem>
+                <MenuItem value="culture">Culture</MenuItem>
+                <MenuItem>Health</MenuItem>
               </Select>
             </Field>
           </Grid>
@@ -266,7 +261,8 @@ const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
           disabled={
             isSubmitting ||
             !!(errors.title && touched.title) ||
-            !!(errors.date && touched.date) || !!(errors.time && touched.time)
+            !!(errors.date && touched.date) ||
+            !!(errors.time && touched.time)
           }
         >
           Save event
@@ -337,16 +333,12 @@ export const AddEventForm = withFormik<MyFormProps, EventItem>({
       date,
       time,
       eventType,
-      sport,
-      culture,
-      health,
       phone,
       email,
       place,
     }: EventItem,
     { props, setSubmitting, setErrors }
   ) {
-
     // POST inputs data to endpoint /add
     fetch('http://localhost:9000/add', {
       method: 'POST',
@@ -356,9 +348,6 @@ export const AddEventForm = withFormik<MyFormProps, EventItem>({
         date,
         time,
         eventType,
-        sport,
-        culture,
-        health,
         phone,
         email,
         place,
