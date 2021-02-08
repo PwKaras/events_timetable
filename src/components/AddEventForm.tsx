@@ -178,7 +178,7 @@ const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
               >
                 <MenuItem value="sport">Sport</MenuItem>
                 <MenuItem value="culture">Culture</MenuItem>
-                <MenuItem>Health</MenuItem>
+                <MenuItem value="health">Health</MenuItem>
               </Select>
             </Field>
           </Grid>
@@ -327,16 +327,7 @@ export const AddEventForm = withFormik<MyFormProps, EventItem>({
   }),
 
   handleSubmit(
-    {
-      title,
-      image,
-      date,
-      time,
-      eventType,
-      phone,
-      email,
-      place,
-    }: EventItem,
+    { title, image, date, time, eventType, phone, email, place }: EventItem,
     { props, setSubmitting, setErrors }
   ) {
     // POST inputs data to endpoint /add
