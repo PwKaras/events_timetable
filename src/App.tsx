@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-import EventsListView from './views/EventsListView';
+import EventsListView from './views/eventsListView/EventsListView';
 import EventView from './views/EventView';
 import AddEventView from './views/AddEventView';
 

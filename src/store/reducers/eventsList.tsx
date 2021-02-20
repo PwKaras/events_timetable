@@ -3,8 +3,6 @@ import * as actionTypes from '../actions/actionTypes';
 
 type EventsList =  EventItem[] | []
 
-
-
 const eventsList: EventsList = [
     {
       id: "pl1",
@@ -24,11 +22,12 @@ const initialState = {
 }; 
 
 const eventsListReducer = (state = initialState, action: any) => {
+  // in the body of action are holding payloads ex. eventsLsist from reducer is in action.
   switch (action.type) {
     case actionTypes.FETCH_EVENTS:
       return {
         ...state,
-        eventsList: state.eventsList,
+        eventsList: action.eventsList,
       };
       default: return state
   }
