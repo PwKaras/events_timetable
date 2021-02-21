@@ -9,4 +9,4 @@ export interface EventItem {
   phone?: string;
   email: string;
   place?: string;
-}
+};

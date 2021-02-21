@@ -1,4 +1,4 @@
-import { EventItem } from '../../views/EventItem';
+import { EventItem } from '../../shared/types';
 import * as actionTypes from '../actions/actionTypes';
 
 type EventsList =  EventItem[] | []
@@ -17,8 +17,10 @@ const eventsList: EventsList = [
       place: "Blue Mountain"
     }
 ]
+const showedItem: EventItem | {} = {}
 const initialState = {
-  eventsList
+  eventsList,
+  showedItem
 }; 
 
 const eventsListReducer = (state = initialState, action: any) => {
@@ -29,6 +31,11 @@ const eventsListReducer = (state = initialState, action: any) => {
         ...state,
         eventsList: action.eventsList,
       };
+      case actionTypes.FETCH_EVENT:
+        return {
+          ...state,
+          displayedEvent: action.event,
+        }
       default: return state
   }
 };

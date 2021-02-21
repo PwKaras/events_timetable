@@ -9,7 +9,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { EventItem } from '../views/EventItem';
+import { EventItem } from '../shared/types';
 
 type P = {
   eventItem: EventItem;
@@ -28,23 +28,24 @@ const useStyles = makeStyles({
 // short version card to display in events list -  only most important information
 export default function CardItem(props: P) {
   const classes = useStyles();
+  const { id, image, title, date } = props.eventItem;
 
   return (
     // dynamically generated link to view with full informations about event, link active on whole event card area
     <Link
       underline="none"
       component={RouterLink}
-      to={`/events/${props.eventItem.id}`}
+      to={`/events/${id}`}
     >
       <Card className={classes.root}>
         <CardActionArea>
-          <CardMedia className={classes.media} image={props.eventItem.image} />
+          <CardMedia className={classes.media} image={image} />
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
-              {props.eventItem.title}
+              {title}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              {props.eventItem.date}
+              {date}
             </Typography>
           </CardContent>
         </CardActionArea>

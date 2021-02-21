@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Header from '../components/Header';
-import { AddEventForm } from '../components/AddEventForm';
+import Header from '../../components/Header';
+import { AddEventForm } from '../../components/AddEventForm';
 import { Container } from '@material-ui/core';
-import LoadingSpinner from '../components/LoadingSpinner';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 const AddEventView = () => {
 
