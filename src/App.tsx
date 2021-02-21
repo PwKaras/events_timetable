@@ -2,8 +2,8 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import EventsListView from './views/eventsListView/EventsListView';
-import EventView from './views/EventView';
-import AddEventView from './views/AddEventView';
+import EventView from './views/eventView/EventView';
+import AddEventView from './views/addEventView/AddEventView';
 
 function App() {
   return (

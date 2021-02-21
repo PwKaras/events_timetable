@@ -2,7 +2,7 @@ import React from 'react';
 import { Title } from './Title';
 import { withFormik, FormikProps, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import { EventItem } from '../views/EventItem';
+import { EventItem } from '../shared/types';
 import 'date-fns';
 import {
   Typography,

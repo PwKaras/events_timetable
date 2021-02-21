@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, makeStyles, Theme } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import CardItem from '../../components/CardItem';
 import Container from '@material-ui/core/Container';
 import Header from '../../components/Header';
 import LoadingSpinner from '../../components/LoadingSpinner';
-import { EventItem } from '../EventItem';
+import { EventItem } from '../../shared/types';
 import { Title } from '../../components/Title';
 import { connect } from 'react-redux';
 import * as actionsCreators from '../../store/actions/index';
