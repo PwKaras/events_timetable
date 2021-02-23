@@ -8,4 +8,8 @@ export const useStyles = makeStyles((theme: Theme) => ({
     cardContent: {
       flexGrow: 1,
     },
+    filterContainter: {
+      display: 'flex',
+      justifyContent: "flex-end"
+    }
   }));
