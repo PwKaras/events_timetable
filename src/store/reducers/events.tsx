@@ -16,11 +16,14 @@ const eventsList: EventsList = [
       email: "john@john.com",
       place: "Blue Mountain"
     }
-]
-const showedItem: EventItem | {} = {}
+];
+
+const displayedEvent: EventItem | {} = {};
+const appliedFilters: string[] | [] = [];
 const initialState = {
   eventsList,
-  showedItem
+  displayedEvent,
+  appliedFilters,
 }; 
 
 const eventsListReducer = (state = initialState, action: any) => {
@@ -35,7 +38,12 @@ const eventsListReducer = (state = initialState, action: any) => {
         return {
           ...state,
           displayedEvent: action.event,
-        }
+        };
+        case actionTypes.FILTER_BY_EVENT_TYPE: 
+        return {
+          ...state,
+          appliedFilters: action.appliedFilters
+        };
       default: return state
   }
 };

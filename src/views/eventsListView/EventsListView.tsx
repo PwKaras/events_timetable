@@ -9,16 +9,15 @@ import { Title } from '../../components/Title';
 import { connect } from 'react-redux';
 import * as actionsCreators from '../../store/actions/index';
 import { useStyles } from './style';
-
-
+import { MultipleSelect } from '../../components/multipleSelect/MultipleSelect';
 
 const EventsListView = (props: any) => {
   // loading state
   const [loading, setIsLoading] = useState(false);
-  
-  const { eventsList, onFetchEventsList } = props;
-  
-  // prepare to holding data using hooks (no redux) fetching from GET /events - 
+
+  const { eventsList, filters, onFetchEventsList, onFilterByEventType } = props;
+
+  // prepare to holding data using hooks (no redux) fetching from GET /events -
   // const [eventsList, setEventsList] = useState<EventItem[]>([]);
 
   const classes = useStyles();
@@ -43,6 +42,25 @@ const EventsListView = (props: any) => {
     sendRequest();
   }, [onFetchEventsList]);
 
+  const showList = (list: EventItem[]) => {
+    return list.map((eventItem: EventItem) => (
+      <Grid item key={eventItem.id} xs={12} sm={6} md={4}>
+        <CardItem eventItem={eventItem} />
+      </Grid>
+    ));
+  };
+
+  const renderList = () => {
+    return filters && filters.length !== 0 && eventsList.lenght !== 0
+      ? showList(
+          eventsList.filter(
+            (eventItem: EventItem) =>
+              eventItem.eventType && filters.includes(eventItem.eventType)
+          )
+        )
+      : showList(eventsList);
+  };
+  
   return (
     <React.Fragment>
       <Header />
@@ -55,13 +73,12 @@ const EventsListView = (props: any) => {
       {!loading && (
         <Container maxWidth="lg">
           <Title>Events List</Title>
+          <Container className={classes.filterContainter}>
+            <MultipleSelect onFilterByEventType={onFilterByEventType} />
+          </Container>
           <Container className={classes.cardGrid} maxWidth="md">
             <Grid container spacing={4}>
-              {eventsList.map((eventItem: EventItem) => (
-                <Grid item key={eventItem.id} xs={12} sm={6} md={4}>
-                  <CardItem eventItem={eventItem} />
-                </Grid>
-              ))}
+              {renderList()}
             </Grid>
           </Container>
         </Container>
@@ -74,12 +91,17 @@ const EventsListView = (props: any) => {
 const mapStateToProps = (state: any) => {
   return {
     eventsList: state.eventsList,
+    filters: state.appliedFilters,
   };
 };
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    onFetchEventsList: (resData: EventItem[] | []) => dispatch(actionsCreators.fetchEvents(resData)),
+    onFetchEventsList: (resData: EventItem[] | []) =>
+      dispatch(actionsCreators.fetchEvents(resData)),
+    onFilterByEventType: (resData: string[] | []) => {
+      dispatch(actionsCreators.filterByEventType(resData));
+    },
   };
 };
 
