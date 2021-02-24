@@ -42,14 +42,25 @@ const EventsListView = (props: any) => {
     sendRequest();
   }, [onFetchEventsList]);
 
-  const filteredEventsList = (eventsList: EventItem[], filters: string[]) =>  {if(filters.length !== 0) {
-    return eventsList.filter(
-      (eventItem: EventItem) =>
-        eventItem.eventType && filters.includes(eventItem.eventType)
-    )} else {return eventsList} 
+  const showList = (list: EventItem[]) => {
+    return list.map((eventItem: EventItem) => (
+      <Grid item key={eventItem.id} xs={12} sm={6} md={4}>
+        <CardItem eventItem={eventItem} />
+      </Grid>
+    ));
   };
 
-
+  const renderList = () => {
+    return filters && filters.length !== 0 && eventsList.lenght !== 0
+      ? showList(
+          eventsList.filter(
+            (eventItem: EventItem) =>
+              eventItem.eventType && filters.includes(eventItem.eventType)
+          )
+        )
+      : showList(eventsList);
+  };
+  
   return (
     <React.Fragment>
       <Header />
@@ -67,24 +78,7 @@ const EventsListView = (props: any) => {
           </Container>
           <Container className={classes.cardGrid} maxWidth="md">
             <Grid container spacing={4}>
-            { 
-              filters && filters.length !== 0 && eventsList.lenght !== 0 ?  
-            eventsList
-            .filter(
-              (eventItem: EventItem) => eventItem.eventType && filters.includes(eventItem.eventType))
-              .map((eventItem: EventItem) =>
-              (
-              <Grid item key={eventItem.id} xs={12} sm={6} md={4}>
-                  <CardItem eventItem={eventItem} />
-                </Grid>
-              )
-               )
-                 : 
-              eventsList.map((eventItem: EventItem) => (
-                <Grid item key={eventItem.id} xs={12} sm={6} md={4}>
-                  <CardItem eventItem={eventItem} />
-                </Grid>
-              ))}
+              {renderList()}
             </Grid>
           </Container>
         </Container>
