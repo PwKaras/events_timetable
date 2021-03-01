@@ -1,14 +1,12 @@
-import React from 'react';
-import { Title } from './Title';
+import React, { useEffect } from 'react';
+import { Title } from '../Title';
 import { withFormik, FormikProps, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import { EventItem } from '../shared/types';
+import { EventItem } from '../../shared/types';
 import 'date-fns';
 import {
   Typography,
   Container,
-  Theme,
-  createStyles,
   CssBaseline,
   Grid,
   TextField,
@@ -18,7 +16,7 @@ import {
   Button,
   InputLabel,
 } from '@material-ui/core';
-import makeStyles from '@material-ui/core/styles/makeStyles';
+import { useStyles } from './style';
 
 interface OtherProps {
   title?: string;
@@ -30,6 +28,7 @@ interface OtherProps {
   phone?: number;
   email?: string;
   place?: string;
+  onAddEventProcess?: any;
 }
 
 interface MyFormProps {
@@ -42,28 +41,9 @@ interface MyFormProps {
   initialPhone?: string;
   initialEmail?: string;
   initialPlace?: string;
+  onAddEvent?: any;
+  onAddEventProcess?: any;
 }
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    container: {
-      marginTop: theme.spacing(5),
-    },
-    form: {
-      width: '100%', // Fix IE 11 issue.
-      marginTop: theme.spacing(5),
-    },
-    submit: {
-      margin: theme.spacing(3, 0, 2),
-    },
-    formControl: {
-      minWidth: 100,
-    },
-    inputlabel: {
-      padding: theme.spacing(0, 0, 0, 2),
-    },
-  })
-);
 
 // listening change on input fields
 const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
@@ -75,9 +55,14 @@ const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
     handleBlur,
     handleSubmit,
     isSubmitting,
+    onAddEventProcess,
   } = props;
 
   const classes = useStyles();
+  
+  useEffect( () => {
+    onAddEventProcess(values);
+  })
 
   return (
     // form
@@ -348,7 +333,10 @@ export const AddEventForm = withFormik<MyFormProps, EventItem>({
       },
     })
       .then((response) => response.json())
-      .then((json) => console.log(json));
+      .then((json) => {
+        console.log(json);
+        props.onAddEvent(json);
+      });
 
     // feedback for user
     alert('Events has been added. Create new events or check our events list');
