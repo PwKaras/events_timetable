@@ -29,6 +29,7 @@ interface OtherProps {
   email?: string;
   place?: string;
   onAddEventProcess?: any;
+  catchValuesFromFormik: (val:EventItem) => void;
 }
 
 interface MyFormProps {
@@ -43,6 +44,7 @@ interface MyFormProps {
   initialPlace?: string;
   onAddEvent?: any;
   onAddEventProcess?: any;
+  catchValuesFromFormik: (val:EventItem) => void;
 }
 
 // listening change on input fields
@@ -56,13 +58,15 @@ const InnerForm = (props: OtherProps & FormikProps<EventItem>) => {
     handleSubmit,
     isSubmitting,
     onAddEventProcess,
+    catchValuesFromFormik,
   } = props;
 
   const classes = useStyles();
   
   useEffect( () => {
+    catchValuesFromFormik(values);
     onAddEventProcess(values);
-  })
+  }, [values])
 
   return (
     // form
